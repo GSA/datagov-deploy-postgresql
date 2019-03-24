@@ -1,3 +1,5 @@
+[![CircleCI](https://circleci.com/gh/GSA/datagov-deploy-postgresql.svg?style=svg)](https://circleci.com/gh/GSA/datagov-deploy-postgresql)
+
 # datagov-deploy-postgresql
 
 Configures PostgreSQL database for an application. The role works with remote
@@ -44,7 +46,7 @@ The name of your application which will be used as a default for the database
 name, role, and other configuration.
 
 
-**`postgresql_role_password`** string (default: `{{ postgresql_app_name }}`)
+**`postgresql_role_password`** string **required**
 
 The password to set on the database role, used for your app to login to the
 database.
@@ -60,7 +62,7 @@ Explicitly set the database role name to create.
 The name of the database to create.
 
 
-**`postgresql_login_host`** string (default: `{{ postgresql_app_name }}`)
+**`postgresql_login_host`** string (default: `localhost`)
 
 The remote host where the database will be created.
 
