@@ -10,6 +10,10 @@
           - postgresql
           - python-psycopg2
 
+    - name: install postgis-scripts for trusty
+      apt: name=postgresql-9.3-postgis-scripts state=present
+      when: ansible_distribution_release == "trusty"
+
     - name: ensure postgresql server is started
       service: name=postgresql state=started enabled=true
 
