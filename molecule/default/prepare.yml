@@ -26,15 +26,3 @@
       postgresql_db: name=master_user owner=master_user state=present
       become: true
       become_user: postgres
-
-    - name: enable network login for postgres user
-      lineinfile: >-
-        dest=/etc/postgresql/9.3/main/pg_hba.conf
-        line="host    all             all              127.0.0.1/32            trust"
-      when: ansible_distribution_release == "trusty"
-
-    - name: enable network login for postgres user
-      lineinfile: >-
-        dest=/etc/postgresql/10/main/pg_hba.conf
-        line="host    all             all              127.0.0.1/32            trust"
-      when: ansible_distribution_release != "trusty"
