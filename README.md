@@ -56,6 +56,12 @@ database.
 
 Explicitly set the database role name to create.
 
+**`postgresql_priv`** string (default: ALL)
+
+PostgreSQL [privileges](https://docs.ansible.com/ansible/latest/modules/postgresql_user_module.html)
+to give the user on tables within the database `postgresql_database_name`. For
+read-only user, try `SELECT`.
+
 
 **`postgresql_database_name`** string (default: `{{ postgresql_app_name }}`)
 
