@@ -3,6 +3,7 @@
   postgresql_user: >-
     name={{ postgresql_role_name }}
     password={{ postgresql_role_password }}
+    db=template0
     login_host={{ postgresql_login_host }}
     login_user={{ postgresql_login_user }}
     login_password={{ postgresql_login_password }}
