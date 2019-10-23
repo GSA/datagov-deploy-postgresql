@@ -6,6 +6,9 @@ Configures PostgreSQL database for an application. The role works with remote
 database servers like AWS RDS. The database will be created with the role as the
 owner.
 
+If you need additional users or permissions, you should probably just use the
+raw `postgresql_*` modules in your playbook or handle them in your application.
+
 
 ## Usage
 
@@ -35,6 +38,10 @@ An example playbook.
 - name: install application
   roles:
     - role: gsa.datagov-deploy-postgresql
+      postgresql_login_host: localhost
+      postgresql_login_user: postgres
+      postgresql_app_name: myapp
+      postgresql_role_password: "{{ secret_app_db_password }}"
 ```
 
 
@@ -56,11 +63,10 @@ database.
 
 Explicitly set the database role name to create.
 
-**`postgresql_priv`** string (default: ALL)
 
-PostgreSQL [privileges](https://docs.ansible.com/ansible/latest/modules/postgresql_user_module.html)
-to give the user on tables within the database `postgresql_database_name`. For
-read-only user, try `SELECT`.
+**`postgresql_role_attr_flags`** string (default: `[LOGIN,NOSUPERUSER,NOCREATEDB,NOCREATEROLE]`)
+
+Attributes to assign to the role.
 
 
 **`postgresql_database_name`** string (default: `{{ postgresql_app_name }}`)
@@ -100,7 +106,7 @@ See [CONTRIBUTING](CONTRIBUTING.md) for additional information.
 
 Install dependencies.
 
-    $ pipenv install
+    $ pipenv install --dev
 
 Run the playbook with molecule.
 

@@ -2,7 +2,11 @@
 postgresql_connection_use_socket: false
 postgresql_database_name: "{{ postgresql_app_name }}"
 postgresql_enable_extensions: []
-postgresql_priv: ALL
+postgresql_role_attr_flags:
+  - LOGIN
+  - NOCREATEDB
+  - NOCREATEROLE
+  - NOSUPERUSER
 postgresql_role_name: "{{ postgresql_app_name }}"
 
 # Defaults for official Ansible postgresql modules

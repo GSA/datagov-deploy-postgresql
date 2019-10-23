@@ -1,7 +1,18 @@
 ---
+- name: create database role for app
+  postgresql_user: >-
+    name={{ postgresql_role_name }}
+    password={{ postgresql_role_password }}
+    login_host={{ postgresql_login_host }}
+    login_user={{ postgresql_login_user }}
+    login_password={{ postgresql_login_password }}
+    role_attr_flags={{ postgresql_role_attr_flags | join(',') }}
+    state=present
+
 - name: create app database
   postgresql_db: >-
     name={{ postgresql_database_name }}
+    owner={{ postgresql_role_name }}
     encoding=UTF-8
     login_host={{ postgresql_login_host }}
     login_user={{ postgresql_login_user }}
@@ -18,26 +29,3 @@
     login_password={{ postgresql_login_password }}
     state=present
   with_items: "{{ postgresql_enable_extensions }}"
-
-- name: create database role for app
-  postgresql_user: >-
-    name={{ postgresql_role_name }}
-    password={{ postgresql_role_password }}
-    db={{ postgresql_database_name }}
-    priv=CONNECT
-    login_host={{ postgresql_login_host }}
-    login_user={{ postgresql_login_user }}
-    login_password={{ postgresql_login_password }}
-    state=present
-
-- name: grant privileges for app role
-  postgresql_privs: >-
-    role={{ postgresql_role_name }}
-    db={{ postgresql_database_name }}
-    objs=ALL_IN_SCHEMA
-    priv={{ postgresql_priv }}
-    type=table
-    login_host={{ postgresql_login_host }}
-    login_user={{ postgresql_login_user }}
-    login_password={{ postgresql_login_password }}
-    state=present
