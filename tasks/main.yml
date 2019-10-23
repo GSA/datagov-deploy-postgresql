@@ -10,6 +10,17 @@
     role_attr_flags={{ postgresql_role_attr_flags | join(',') }}
     state=present
 
+# Needed for RDS, avoids "must be member of `role`"
+- name: add login_user to new role
+  postgresql_membership: >-
+    db=postgres
+    groups={{ postgresql_role_name }}
+    login_host={{ postgresql_login_host }}
+    login_password={{ postgresql_login_password }}
+    login_user={{ postgresql_login_user }}
+    state=present
+    target_roles={{ postgresql_login_user }}
+
 - name: create app database
   postgresql_db: >-
     name={{ postgresql_database_name }}
