@@ -2,6 +2,7 @@
 - name: create database role for app
   postgresql_user: >-
     name={{ postgresql_role_name }}
+    db=postgres
     password={{ postgresql_role_password }}
     login_host={{ postgresql_login_host }}
     login_user={{ postgresql_login_user }}
